@@ -1,7 +1,5 @@
 import "./Card.css"
 
-//import Card from './components/DogCard';
-//import './App.css'
 
 export default function Card({name, dates, domain, pictureUrl}) {
   return(
