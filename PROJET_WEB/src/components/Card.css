@@ -1,5 +1,7 @@
 
 #woman-card {
+  background-color: antiquewhite;
+  color: black;
     width: 200px;
     height: 200px;
     display: flex;
@@ -18,11 +20,13 @@
   
   #description {
     padding: 10px;
+    background-color: antiquewhite;
     color: #000000;
   }
   
   #description h3 {
     font-size: 18px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin: 0;
   }
   

@@ -115,7 +115,7 @@ export default [
        {id: 17,
         name: "Emmy Noether",
         dates: "1882 - 1935",
-        domain: "Mathematics, Theoretical Physics",
+        domain: "Mathematics, Physics",
         pictureUrl: "https://opinion-images.wsj.net/im-80191927/?width=1280&size=1",
        },  
        
@@ -192,7 +192,7 @@ export default [
        {id: 28,
         name: "Maria Goeppert Mayer",
         dates: "1906 - 1972",
-        domain: "Theoretical Physics",
+        domain: "Physics",
         pictureUrl: "https://images.ctfassets.net/eqlypemzu8y5/6AirqmcJcGJWvTNLNHazQl/b29e5f6126a01526ac1efb298875692f/Maria_Goeppert_Mayer.jpg",
        },  
        

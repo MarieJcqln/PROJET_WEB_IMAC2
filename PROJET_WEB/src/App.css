@@ -1,0 +1,30 @@
+body{
+    background-color: black;
+    color: antiquewhite;
+}
+h1{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    margin: 5%;
+}
+
+input{
+    background-color: black;
+    color: antiquewhite;
+    margin-right: 2%;
+}
+
+select{
+    background-color: antiquewhite;
+    color:black;
+}
+
+#gallery-options{
+    margin: 5%;
+}
+
+#gallery{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

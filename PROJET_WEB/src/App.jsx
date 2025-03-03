@@ -1,22 +1,35 @@
 import Card from './components/Card';
-import { useState, useMemo } from "react";
+import { useState, useMemo,useEffect } from "react";
 import Data from "./Data.js";
+import "./App.css";
 
 export default function App() {
-  const [search, setSearch] = useState("");
-  const [scientistSortBy, setScientistSortBy] = useState("dates");
+  const [search, setSearch] = useState(localStorage.getItem("search") || "");
+  const [scientistSortBy, setScientistSortBy] = useState(localStorage.getItem("scientistSortBy") ||"dates");
+
+  //Local Storage
+  useEffect(() => {
+    localStorage.setItem("search", search)
+  }, [search])
+
+  useEffect(() => {
+    localStorage.setItem("scientistSortBy", scientistSortBy)
+  }, [scientistSortBy])
 
   // Filtrage et tri des scientifiques
   const filteredScientistData = useMemo(() => {
     let result = Data.filter((scientist) =>
-      scientist.name.toLowerCase().includes(search.toLowerCase())
+      scientist.name.toLowerCase().includes(search.toLowerCase()) ||
+      scientist.domain.toLowerCase().includes(search.toLowerCase()) // Recherche aussi par domaine
     );
 
     result = result.slice().sort((a, b) => {
       if (scientistSortBy === "dates") {
         return (a.dates || 0) - (b.dates || 0);
-      } else {
+      } else if (scientistSortBy === "name") {
         return a.name.localeCompare(b.name);
+      } else {
+        return a.domain.localeCompare(b.domain); // Tri par domaine
       }
     });
 
@@ -33,7 +46,7 @@ export default function App() {
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search scientists"
+          placeholder="Search scientists or domains"
         />
         <label htmlFor="scientist-sort">Sort by:</label>
         <select
@@ -43,6 +56,7 @@ export default function App() {
         >
           <option value="dates">Dates</option>
           <option value="name">Name</option>
+          <option value="domain">Domain</option>
         </select>
       </div>
 
