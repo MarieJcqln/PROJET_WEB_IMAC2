@@ -38,7 +38,8 @@ export default function App() {
 
   return (
     <div>
-      <h1>Science Center</h1>
+    <div id="title"><h1>Science Center</h1></div>
+      
 
       {/* Recherche et tri */}
       <div id="gallery-options">
