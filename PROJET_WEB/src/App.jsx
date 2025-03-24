@@ -1,11 +1,16 @@
 import Card from './components/Card';
 import { useState, useMemo,useEffect } from "react";
 import Data from "./Data.js";
+import get_items from "./services/api.js";
 import "./App.css";
 
 export default function App() {
   const [search, setSearch] = useState(localStorage.getItem("search") || "");
   const [scientistSortBy, setScientistSortBy] = useState(localStorage.getItem("scientistSortBy") ||"dates");
+  const [items, setItems] = useState([]);
+
+  //Mettre en state le tableau, éviter de recharger le tableau plusieurs fois
+  //get_items();
 
   //Local Storage
   useEffect(() => {
@@ -16,9 +21,18 @@ export default function App() {
     localStorage.setItem("scientistSortBy", scientistSortBy)
   }, [scientistSortBy])
 
+  useEffect(() => {
+    const fetchItems = async () => {
+      const data = await get_items();
+      setItems(data);
+    }
+    fetchItems();
+    //localStorage.setItem("items", items)
+  }, [])
+
   // Filtrage et tri des scientifiques
   const filteredScientistData = useMemo(() => {
-    let result = Data.filter((scientist) =>
+    let result = items.filter((scientist) =>
       scientist.name.toLowerCase().includes(search.toLowerCase()) ||
       scientist.domain.toLowerCase().includes(search.toLowerCase()) // Recherche aussi par domaine
     );
@@ -34,7 +48,7 @@ export default function App() {
     });
 
     return result;
-  }, [search, scientistSortBy]);
+  }, [search, scientistSortBy,items]);
 
   return (
     <div>
