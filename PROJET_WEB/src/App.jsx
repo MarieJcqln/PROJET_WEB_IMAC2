@@ -1,7 +1,7 @@
 import Card from './components/Card';
 import { useState, useMemo,useEffect } from "react";
-import Data from "./Data.js";
-import get_items from "./services/api.js";
+//import Data from "./Data.js";
+import getItems from "./services/api.js";
 import "./App.css";
 
 export default function App() {
@@ -23,7 +23,7 @@ export default function App() {
 
   useEffect(() => {
     const fetchItems = async () => {
-      const data = await get_items();
+      const data = await getItems();
       setItems(data);
     }
     fetchItems();
@@ -39,7 +39,29 @@ export default function App() {
 
     result = result.slice().sort((a, b) => {
       if (scientistSortBy === "dates") {
-        return (a.dates || 0) - (b.dates || 0);
+        const extractYear = (dateString) => {
+          if (!dateString) return 0;
+          
+          // Gestion des cas "XIII BC", "IV century AD"
+          if (dateString.includes("BC")) {
+            const bcYear = dateString.match(/\d+/); // Récupère l'année
+            return bcYear ? -parseInt(bcYear[0]) : -10000; // Les BC doivent être négatifs
+          }
+          if (dateString.includes("century")) {
+            const century = dateString.match(/\d+/); // Ex: "IV century AD"
+            return century ? (parseInt(century[0]) - 1) * 100 + 50 : 0; // Approximation au milieu du siècle
+          }
+    
+          // Cas classique "1867 - 1934"
+          const years = dateString.match(/\d+/g);
+          return years ? parseInt(years[0]) : 0; // On prend l'année de naissance
+        };
+    
+        const yearA = extractYear(a.dates);
+        const yearB = extractYear(b.dates);
+    
+        return yearA - yearB;
+
       } else if (scientistSortBy === "name") {
         return a.name.localeCompare(b.name);
       } else {
